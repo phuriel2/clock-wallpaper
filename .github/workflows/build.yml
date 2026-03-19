@@ -16,14 +16,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-
       - name: Build APK
-        run: gradle assembleDebug --no-daemon --warning-mode=none
+        env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
+        run: |
+          gradle assembleDebug \
+            --no-daemon \
+            --warning-mode=none \
+            -Pandroid.sdk.path=/usr/local/lib/android/sdk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
